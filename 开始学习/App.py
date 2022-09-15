@@ -7,9 +7,10 @@ from markupsafe import escape
 from flask import Flask, url_for, request, Response, render_template, make_response
 # 启用安全名
 from werkzeug.utils import secure_filename
-
+from flask_cors import CORS
 # !__name__告诉flask主入口文件在哪，实例化
 app = Flask(__name__)
+CORS(app)
 """
 https://dormousehole.readthedocs.io/en/latest/quickstart.html
 ! powershel中设置值环境变量，然后直接依靠flaskClient 进行启动

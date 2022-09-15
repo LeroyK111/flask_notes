@@ -106,9 +106,31 @@ https://www.runoob.com/http/http-content-type.html
 
 
 
+## 数据模型
+
+```
+pip install flask-sqlalchemy
+```
 
 
 
+## rest接口模式
+
+
+
+
+
+
+
+## CORS跨域
+
+https://flask-cors.readthedocs.io/en/latest/
+
+```
+pip install -U flask-cors
+```
+
+![image-20220915235016547](readme.assets/image-20220915235016547.png)
 
 ## jinja2模板
 
@@ -131,4 +153,54 @@ pip install blinker
 ```
 pip i greenlet
 ```
+
+
+
+
+
+## 常用扩展
+
+### 开发调试
+
+- [Flask-Script](http://www.jiege.tech/extensions/flask-script.html)
+- [Flask-DebugToolbar](http://www.jiege.tech/extensions/flask-debugtoolbar.html)
+
+### 数据模型
+
+- [Flask-SQLAlchemy](http://www.jiege.tech/extensions/flask-sqlalchemy.html)
+- [Flask-Migrate](http://www.jiege.tech/extensions/flask-migrate.html)
+
+### 数据缓存
+
+- [Flask-Cache](http://www.jiege.tech/extensions/flask-cache.html)
+
+### `Session`
+
+- [Flask-Session](http://www.jiege.tech/extensions/flask-session.html)
+
+### 前后端分离的项目
+
+- [Flask-RESTPlus](http://www.jiege.tech/extensions/flask-restplus.html)
+- [Flask-JWT-Extended](http://www.jiege.tech/extensions/flask-jwt-extended.html)
+- [Flask-HTTPAuth](http://www.jiege.tech/extensions/flask-httpauth.html)
+- [Flask-RESTful](http://www.jiege.tech/extensions/flask-restful.html)
+
+### 邮件发送
+
+- [Flask-Mail](http://www.jiege.tech/extensions/flask-mail.html)
+
+### 异步操作
+
+- [Flask-Celery-Helper](http://www.jiege.tech/extensions/flask-celery-helper.html)
+
+### 跨域解决
+
+- [Flask-CORS](http://www.jiege.tech/extensions/flask-cors.html)
+
+### 模板相关
+
+- [Flask-Bootstrap](http://www.jiege.tech/extensions/flask-bootstrap.html)
+- [Flask-Moment](http://www.jiege.tech/extensions/flask-moment.html)
+- [Flask-WTF](http://www.jiege.tech/extensions/flask-wtf.html)
+- [Flask-Uploads](http://www.jiege.tech/extensions/flask-uploads.html)
 
