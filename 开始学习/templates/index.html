@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <link rel="stylesheet" href="../static/index.css">
+    <script src="../static/index.js"></script>
+</head>
+<body>
+    <header>
+        <h1>请登录</h1>
+        <h2>接收模板传参{{name}}</h2>
+    </header>
+    <!-- <nav>导航</nav> -->
+    <article>
+        <div>登录</div>
+        <section>
+            <label for="username">用户名：</label>
+            <input type="text" id="username"/>
+            <label for="password">密码：</label>
+            <input type="text" id="password"/>
+            <button id="login">登录</button>
+            <!-- 这里就是上传文件的地方 -->
+            <!-- <input type="file" name="file" id="file"> -->
+            <!-- 给个下载文件的地方 -->
+            <a href="../static/uploads/1.zip">点我下载</a>
+        </section>
+        <!-- <aside>侧边栏</aside> -->
+    </article>
+    <footer>尾部
+        <!-- jinja2的模板化语法，坑 -->
+        <img src="{{ url_for('static', filename='/imgs/模板大坑.png')}}" alt="">
+    </footer>
+</body>
+</html>
