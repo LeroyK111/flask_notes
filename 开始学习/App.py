@@ -4,10 +4,13 @@
 
 import json
 from markupsafe import escape
-from flask import Flask, url_for, request, Response, render_template, make_response
+from flask import Flask, url_for, request, Response, render_template, make_response, abort, redirect, session
 # 启用安全名
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
+# 启动时间
+from datetime import timedelta
+
 # !__name__告诉flask主入口文件在哪，实例化
 app = Flask(__name__)
 CORS(app)
@@ -83,11 +86,10 @@ def index():
 
 
 # 可以构建多重路由
-@app.route("/login")
-@app.route('/login/<page>')
-def login(page=""):
-    return f'测试一下{page}'
-
+# @app.route("/login")
+# @app.route('/login/<page>')
+# def login(page=""):
+#     return f'测试一下{page}'
 
 # # ?伪造请求,对url_for进行测试
 # with app.test_request_context():
@@ -167,9 +169,120 @@ def download_file():
 
 
 """
-cookie的验证和使用
+cookie的验证和使用。浏览器会自动保存cookies，只要第一次响应带着cookies。
 """
-# @app.route("")
+
+
+@app.route('/logout')
+def logout():
+    username = request.cookies.get('username')
+    # print(username)
+    if username:
+        return {"state": "ok", "msg": "登录成功"}
+    else:
+        return Response(response="登录失败")
+
+
+@app.route("/login")
+def login():
+    res = Response(response="测试一下", content_type="text/html;charset=UTF-8")
+    res.set_cookie("username", "slkdfjwiosdnlksirjlksdsf")
+    return res
+
+
+"""
+session
+密钥可以secrets库生成。。。。但我不推荐。
+"""
+# !直接设置密钥，一般不用原生的加密包，选择其他
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+# !设置到期时间，快速设置方式
+# session.permanent = True 默认31天
+# !直接配置时间10s过期
+app.permanent_session_lifetime = timedelta(days=1)
+
+
+@app.route('/session/res')
+def sessionres():
+    if 'username' in session:
+        return f'你的登录名 {session["username"]} <a href="/session/logout">logout</a>'
+    return '登录失败<script> setTimeout(() => {location.replace("http://127.0.0.1:5000/session/req");}, 3000);</script>'
+
+
+@app.route("/session/req", methods=['GET', 'POST'])
+def sessionlogin():
+    if request.method == 'POST':
+        session.permanent = True
+        session['username'] = request.form['username']
+        return redirect(url_for('sessionres'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+
+@app.route('/session/logout', methods=['GET'])
+def sessionlogout():
+    print("注销登录")
+    session.pop('username', None)
+    return redirect(url_for('sessionlogin'))
+
+
+"""
+重定向和错误
+"""
+
+
+@app.route('/redirect')
+def redi():
+    # !自定义重定向
+    # return redirect("/upload", code=302)
+    # !最常见用法
+    # return redirect(url_for("upload_file"))
+
+    # !直接跳转到404页面
+    abort(404)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
+
+
+# 等价写法
+# @app.errorhandler(404)
+# def not_found(error):
+#     resp = make_response(render_template('error.html'), 404)
+#     resp.headers['X-Something'] = 'A value'
+#     return resp
+"""
+json高级格式
+"""
+
+# !所有的字典都可以自动转换为json格式的响应
+# @app.route("/me")
+# def me_api():
+#     user = get_current_user()
+#     return {
+#         "username": user.username,
+#         "theme": user.theme,
+#         "image": url_for("user_image", filename=user.image),
+#     }
+
+# !也支持列表[{字典}]，嵌套方法
+# @app.route("/users")
+# def users_api():
+#     users = get_all_users()
+#     return jsonify([user.to_json() for user in users])
+"""
+全局日志配置: 基于原生logger日志构建，直接查看
+"""
+
+# app.logger.debug('A value for debugging')
+# app.logger.warning('A warning occurred (%d apples)', 42)
+# app.logger.error('An error occurred')
 
 if __name__ == '__main__':
     # ! 这里我们选择python脚本启动，可以设置ip和port
