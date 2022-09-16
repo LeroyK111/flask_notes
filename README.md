@@ -22,13 +22,14 @@ pip install flask
 ```
 
 ```
-基本目录
+基本目录，自定义
 App.py- 主文件，配置各种全局参数
       |
     ---static 静态文件css js files等
 	---templates 模板文件 html
 	---routers 子路由
-	---
+	---modles 数据模型
+	---XXX 其他文件夹，有需要可以自定义
 ```
 
 ### 常用依赖
@@ -46,31 +47,123 @@ App.py- 主文件，配置各种全局参数
 
 ### 基础路由
 
+装饰器@app.route("/")
+
+![image-20220916141821475](readme.assets/image-20220916141821475.png)
+
+
+
 #### 路由传参
 
-### 路由跳转
+<name>
+
+路由传参：**get传参不一样哦**
+
+![image-20220916142436177](readme.assets/image-20220916142436177.png)
+
+### 内部路由跳转
+
+url_for跳转模板
+
+![image-20220916144437713](readme.assets/image-20220916144437713.png)
+
+#### 重定向与异常响应
+
+真正的重定向方法，通常与url_for结合使用
+
+![image-20220916144731612](readme.assets/image-20220916144731612.png)
+
+
 
 ### 请求头request
 
-### jinja模板渲染
-
-
+![image-20220916153839001](readme.assets/image-20220916153839001.png)
 
 ### SSR静态文件代理
 
+![image-20220916153718415](readme.assets/image-20220916153718415.png)
+
 ### 响应头response
 
-#### 自定义响应
+####  基础响应
+
+![image-20220916154619464](readme.assets/image-20220916154619464.png)
+
+#### json特定响应
+
+直接字典即可
+
+![image-20220916154650352](readme.assets/image-20220916154650352.png)
+
+#### 高级响应
+
+自定义范围更大。
+
+![image-20220916154806419](readme.assets/image-20220916154806419.png)
+
+### cookie设置
+
+![image-20220916154855523](readme.assets/image-20220916154855523.png)
+
+### session设置
+
+cookie唯一区别，加密和不加密的区别。
+
+#### 原生加密方法：
+
+![image-20220916141326615](readme.assets/image-20220916141326615.png)
 
 
+
+#### 三方加密方式：
+
+MD5加密
+
+全称：MD5消息摘要算法（英语：MD5 Message-Digest Algorithm），一种被广泛使用的密码散列函数，可以产生出一个128位（16字节）的散列值（hash value），用于确保信息传输完整一致。md5加密算法是不可逆的，所以解密一般都是通过暴力穷举方法，通过网站的接口实现解密。
+
+SHA1加密
+
+全称： 安全哈希算法（Secure Hash Algorithm）主要适用于数字签名标准（Digital Signature Standard DSS）里面定义的数字签名算法（Digital Signature Algorithm DSA），SHA1比MD5的安全性更强。对于长度小于2^ 64位的消息，SHA1会产生一个160位的消息摘要。
+
+HMAC加密
+
+全称： 散列消息鉴别码 （Hash Message Authentication Code）， HMAC加密算法是一种安全的基于加密hash函数和共享密钥的消息认证协议。实现原理是用公开函数和密钥产生一个固定长度的值作为认证标识，用这个标识鉴别消息的完整性。使用一个密钥生成一个固定大小的小数据块，即 MAC，并将其加入到消息中，然后传输。接收方利用与发送方共享的密钥进行鉴别认证等。
+
+DES加密：
+
+全称：数据加密标准（ Data Encryption Standard ），属于对称加密算法。 DES是一个分组加密算法，典型的DES以64位为分组对数据加密，加密和解密用的是同一个算法。它的密钥长度是56位（因为每个第8 位都用作奇偶校验），密钥可以是任意的56位的数，而且可以任意时候改变。
+
+AES加密：
+
+全称：高级加密标准（英语：Advanced Encryption Standard），在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。
+
+RSA加密:
+
+全称： Rivest-Shamir-Adleman， RSA加密算法是一种非对称加密算法。在公开密钥加密和电子商业中RSA被广泛使用。它被普遍认为是目前最优秀的公钥方案之一。RSA是第一个能同时用于加密和数字签名的算法，它能够抵抗到目前为止已知的所有密码攻击。
+
+ECC加密：
+
+全称：椭圆曲线加密（Elliptic Curve Cryptography），ECC加密算法是一种公钥加密技术，以椭圆曲线理论为基础。利用有限域上椭圆曲线的点构成的Abel群离散对数难解性，实现加密、解密和数字签名。将椭圆曲线中的加法运算与离散对数中的模乘运算相对应，就可以建立基于椭圆曲线的对应密码体制。
+
+UUID：
+
+生成唯一ID。标识唯一性，通常和时间戳有关。
 
 ### 文件上下传
 
+基于表单上传文件。
+
+![image-20220916154032638](readme.assets/image-20220916154032638.png)
 
 
 
+基于a标签（链接方法）下载文件。
 
+![image-20220916154043913](readme.assets/image-20220916154043913.png)
 
+### 日志配置
+
+![image-20220916155024589](readme.assets/image-20220916155024589.png)
 
 
 
@@ -102,7 +195,7 @@ https://www.runoob.com/http/http-content-type.html
 
 ## 同步网关
 
-已自动安装。
+已自动安装。![image-20220916155101062](readme.assets/image-20220916155101062.png)
 
 
 
@@ -140,8 +233,6 @@ pip i jinja2
 
 这里我们忽略模板，因为前后端分离的必要性。
 
-
-
 ## 内部解耦信号
 
 ```
@@ -153,6 +244,16 @@ pip install blinker
 ```
 pip i greenlet
 ```
+
+## 部署发布
+
+![image-20220916143334253](readme.assets/image-20220916143334253.png)
+
+
+
+
+
+
 
 
 
@@ -169,6 +270,7 @@ pip i greenlet
 
 - [Flask-SQLAlchemy](http://www.jiege.tech/extensions/flask-sqlalchemy.html)
 - [Flask-Migrate](http://www.jiege.tech/extensions/flask-migrate.html)
+- [Flask-GraphQL](https://pypi.org/project/Flask-GraphQL/)
 
 ### 数据缓存
 
