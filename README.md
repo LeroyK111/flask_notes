@@ -489,13 +489,15 @@ https://dormousehole.readthedocs.io/en/latest/reqcontext.html
 
 ![image-20220918225749989](readme.assets/image-20220918225749989.png)
 
+## RESTAPI
 
+直接全部接口化的插件包。
 
+https://flask-restplus.readthedocs.io/en/stable/
 
-
-
-
-
+```
+pip install flask-restplus
+```
 
 
 
