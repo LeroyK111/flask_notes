@@ -69,11 +69,13 @@ url_for跳转模板
 
 #### 重定向与异常响应
 
+只有两种异常，蓝图子路由组件无法简单捕获。404，405
+
 真正的重定向方法，通常与url_for结合使用
 
 ![image-20220916144731612](readme.assets/image-20220916144731612.png)
 
-
+![image-20220918222324033](readme.assets/image-20220918222324033.png)
 
 ### 请求头request
 
@@ -165,6 +167,26 @@ UUID：
 
 ![image-20220916155024589](readme.assets/image-20220916155024589.png)
 
+#### 高级日志配置
+
+https://dormousehole.readthedocs.io/en/latest/logging.html
+
+![image-20220918202409797](readme.assets/image-20220918202409797.png)
+
+#### 配置文件，一般都是单独配置
+
+设置日志文件存放位置。
+
+![image-20220918202554434](readme.assets/image-20220918202554434.png)
+
+#### 发送服务器邮件
+
+![image-20220918202642009](readme.assets/image-20220918202642009.png)
+
+#### 其他不常用
+
+![image-20220918202825964](readme.assets/image-20220918202825964.png)
+
 
 
 
@@ -199,19 +221,144 @@ https://www.runoob.com/http/http-content-type.html
 
 
 
-## 数据模型
+## 蓝图（多路由）
+
+https://dormousehole.readthedocs.io/en/latest/blueprints.html
+
+其他配置选项。
+
+![image-20220916143334253](readme.assets/image-20220916143334253.png)
+
+![image-20220918193206303](readme.assets/image-20220918193206303.png)
+
+这里我们将使用蓝图构建更大型的项目。
+
+## 全局配置选项Api
+
+https://dormousehole.readthedocs.io/en/latest/config.html
+
+太多了。
+
+### 配置数据库链接
+
+主要看这版学习
+
+https://docs.sqlalchemy.org/en/14/tutorial/index.html
+
+flask在数据库链接中，文档已经常年不更新了。注意啊。
 
 ```
-pip install flask-sqlalchemy
+# 不推荐使用，必须手动载入app对象，真的巨坑。只适合临时用用。
+pip install -U Flask-SQLAlchemy
+# 推荐使用
+pip install -U SQLAlchemy
 ```
 
+使用原生SQLAlchemy。ORM抽象class进行增删改查。
 
+**我们不选择使用它。古老的方法**
+
+CORE直接原生sql执行增删改查。既然我们懂sql那就直接用，不好嘛。
+
+简单查询（简单sql），推荐API。
+
+复杂查询（分组，子查询，跨表，窗口等），这里还是推荐sql
+
+![image-20220918192523589](readme.assets/image-20220918192523589.png)
+
+#### TEXT用法
+
+![image-20220918192734750](readme.assets/image-20220918192734750.png)
+
+#### ORM用法
+
+![image-20220918192832091](readme.assets/image-20220918192832091.png)
+
+
+
+### 构建子组件
+
+嵌套路由，子路由等等。
+
+https://dormousehole.readthedocs.io/en/latest/blueprints.html
+
+![image-20220918193024195](readme.assets/image-20220918193024195.png)
+
+
+
+## 表单验证
+
+https://dormousehole.readthedocs.io/en/latest/patterns/wtforms.html
+
+属于Flask方案之一 。由于都是json数据流，我们不做from-data考虑
+
+## Flask方案
+
+https://dormousehole.readthedocs.io/en/latest/patterns/index.html
+
+使用虚拟化容器方案，解决多应用冲突
+
+推荐docker and conda
+
+视图缓存。
+
+https://flask-caching.readthedocs.io/en/latest/
+
+```
+pip install Flask-Caching
+```
+
+惰性视图。看看就行。
+
+https://dormousehole.readthedocs.io/en/latest/patterns/lazyloading.html
+
+## 异步任务
+
+基于celery，非插件，而是文件的方式。
+
+https://dormousehole.readthedocs.io/en/latest/patterns/celery.html
+
+## 单页应用SPA
+
+接收到404请求时，依然渲染index.html主页。
+
+![image-20220917000130035](readme.assets/image-20220917000130035.png)
 
 ## rest接口模式
 
 
 
 
+
+
+
+## 高级错误
+
+https://dormousehole.readthedocs.io/en/latest/errorhandling.html
+
+### 1.错误日志工具（收费）
+
+```
+pip install sentry-sdk[flask]
+```
+
+大型项目时，再去使用。
+
+
+
+### 2.注册错误视图
+
+解决SPA路由404问题，就在这里。重新渲染index.html即可
+
+![image-20220918194424861](readme.assets/image-20220918194424861.png)
+
+### 3.通用异常处理器
+
+![image-20220918195248908](readme.assets/image-20220918195248908.png)
+
+### 4.返回API异常处理
+
+![image-20220918195402521](readme.assets/image-20220918195402521.png)
 
 
 
@@ -225,29 +372,122 @@ pip install -U flask-cors
 
 ![image-20220915235016547](readme.assets/image-20220915235016547.png)
 
+### 详细设置
+
+最方便的配置:
+
+https://flask-cors.corydolphin.com/en/latest/api.html
+
+```
+默认值：
+CORS_ALLOW_HEADERS: “*”
+CORS_ALWAYS_SEND: True
+CORS_AUTOMATIC_OPTIONS: True
+CORS_EXPOSE_HEADERS: None
+CORS_INTERCEPT_EXCEPTIONS: True
+CORS_MAX_AGE: None
+CORS_METHODS: [”GET”, “HEAD”, “POST”, “OPTIONS”, “PUT”, “PATCH”, “DELETE”]
+CORS_ORIGINS: “*”
+CORS_RESOURCES: r”/*”
+CORS_SEND_WILDCARD: False
+CORS_SUPPORTS_CREDENTIALS: False
+CORS_VARY_HEADER: True
+```
+
+
+
 ## jinja2模板
+
+这里我们忽略模板，因为前后端分离的必要性。
+
+本人会vue，react.
+
+https://dormousehole.readthedocs.io/en/latest/templating.html
 
 ```
 pip i jinja2
 ```
 
-这里我们忽略模板，因为前后端分离的必要性。
-
 ## 内部解耦信号
 
+https://dormousehole.readthedocs.io/en/latest/signals.html
+
 ```
+# 推荐使用三方信号库
 pip install blinker
 ```
 
-## 异步网关
+主要是是传递消息，让一部分业务解耦。
+
+官方推荐这个库，使用方便。
+
+
+
+## 高级视图
+
+https://dormousehole.readthedocs.io/en/latest/views.html
+
+### 抽象视图
+
+![image-20220918223118241](readme.assets/image-20220918223118241.png)
+
+### 视图继承
+
+![image-20220918223153186](readme.assets/image-20220918223153186.png)
+
+### REST抽象方法
+
+![image-20220918223220574](readme.assets/image-20220918223220574.png)
+
+### 视图拦截
+
+![image-20220918223319709](readme.assets/image-20220918223319709.png)
+
+
+
+
+
+## 异步视图
+
+这里就很讲究了。还是推荐fastApi
+
+https://dormousehole.readthedocs.io/en/latest/async-await.html
 
 ```
 pip i greenlet
 ```
 
-## 部署发布
+## 部署方式
 
-![image-20220916143334253](readme.assets/image-20220916143334253.png)
+一般静态文件交给nginx代理，server的动态路由走反向代理。
+
+https://dormousehole.readthedocs.io/en/latest/deploying/index.html
+
+## 命令行接口
+
+了解基础命令即可。
+
+https://dormousehole.readthedocs.io/en/latest/cli.html
+
+部署完毕，需要nginx代理静态文件，然后启动flask run
+
+```
+flask run -h 127.0.0.1
+-h, --host TEXT                 The interface to bind to.
+-p, --port INTEGER              The port to bind to.
+```
+
+![image-20220918225954086](readme.assets/image-20220918225954086.png)
+
+## 生民周期（不常用）
+
+https://dormousehole.readthedocs.io/en/latest/appcontext.html
+
+https://dormousehole.readthedocs.io/en/latest/reqcontext.html
+
+![image-20220918223612003](readme.assets/image-20220918223612003.png)
+
+![image-20220918225749989](readme.assets/image-20220918225749989.png)
 
 
 
