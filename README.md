@@ -503,6 +503,9 @@ pip install flask-restplus
 
 ## 常用扩展
 
+### 用户权限
+
+- [Flask-login](https://github.com/maxcountryman/flask-login)
 ### 开发调试
 
 - [Flask-Script](http://www.jiege.tech/extensions/flask-script.html)
