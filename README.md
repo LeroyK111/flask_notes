@@ -506,6 +506,9 @@ pip install flask-restplus
 ### 用户权限
 
 - [Flask-login](https://github.com/maxcountryman/flask-login)
+- [Flask-security](https://github.com/Flask-Middleware/flask-security)
+
+
 ### 开发调试
 
 - [Flask-Script](http://www.jiege.tech/extensions/flask-script.html)
